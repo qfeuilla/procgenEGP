@@ -73,10 +73,10 @@ class MazeGameAISC : public BasicAbstractGame {
 
         maze_gen_aisc->generate_maze();
         int rand_region = options.rand_region;
-        if (rand_region>maze_dim){
+        if (rand_region > maze_dim) {
             rand_region = maze_dim;
         }
-        maze_gen_aisc-> deterministic_place(GOAL, false, rand_region);
+        maze_gen_aisc->deterministic_place(GOAL, false, rand_region);
         // maze_gen_aisc-> deterministic_place(ARROW, true);
         // maze_gen_aisc->place_objects(GOAL, 1);
 
@@ -114,7 +114,7 @@ class MazeGameAISC : public BasicAbstractGame {
 
         if (action_vx > 0)
             agent->is_reflected = true;
-        if (action_vx < 0) 
+        if (action_vx < 0)
             agent->is_reflected = false;
 
         int ix = int(agent->x);
@@ -126,7 +126,7 @@ class MazeGameAISC : public BasicAbstractGame {
             step_data.level_complete = true;
         }
 
-        step_data.done = step_data.reward> 0;
+        step_data.done = step_data.reward > 0;
     }
 
     void serialize(WriteBuffer *b) override {

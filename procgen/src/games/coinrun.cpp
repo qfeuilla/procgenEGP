@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <filesystem>
+#include <fstream>
 
 const std::string NAME = "coinrun";
 
@@ -295,17 +296,19 @@ class CoinRun : public BasicAbstractGame {
         return ent;
     }
 
-    void generate_coin(bool randomize_goal) {
+    int generate_coin(bool randomize_goal) {
         int RAND_COIN;
         int FIXED_COIN;
 
-        if (randomize_goal) {
+        if (true) { // if randomize_goal
             RAND_COIN = GOAL;
             FIXED_COIN = INVISIBLE_GOAL;
         } else {
             RAND_COIN = INVISIBLE_GOAL;
             FIXED_COIN = GOAL;
         }
+
+        int current_goal_asset = 0;
 
         int max_difficulty = 3;
         int dif = rand_gen.randn(max_difficulty) + 1;
@@ -372,7 +375,7 @@ class CoinRun : public BasicAbstractGame {
                     set_obj(curr_x, curr_y, RAND_COIN);
                     if (RAND_COIN == GOAL) {
                         auto ent = create_goal(curr_x, curr_y, GOAL_ASSET);
-                        std::cout << ent->image_theme << std::endl;
+                        current_goal_asset = ent->image_theme;
                     }
                     coined = true;
                 }
@@ -468,11 +471,13 @@ class CoinRun : public BasicAbstractGame {
         set_obj(curr_x, curr_y, FIXED_COIN);
         if (FIXED_COIN == GOAL) {
             auto ent = create_goal(curr_x, curr_y, GOAL_ASSET);
-            std::cout << ent->image_theme << std::endl;
+            ent->image_theme = ent->image_theme;
         }
 
         fill_ground_block(curr_x, 0, 1, curr_y);
         fill_elem(curr_x + 1, 0, main_width - curr_x - 1, main_height, WALL_MID);
+
+        return current_goal_asset;
     }
 
     void game_reset() override {
@@ -510,7 +515,11 @@ class CoinRun : public BasicAbstractGame {
         init_floor_and_walls();
         int rand_check = rand_gen.randn(100);
         randomize_goal = (rand_check < options.random_percent);
-        generate_coin(randomize_goal);
+
+        std::ofstream myfile;
+        myfile.open(global_resource_root + "target_asset.txt");
+        myfile << generate_coin(randomize_goal);
+        myfile.close();
     }
 
     bool can_support(int obj) {
