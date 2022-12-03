@@ -6,6 +6,10 @@
 #include "../cpp-utils.h"
 #include "../qt-utils.h"
 
+#include <string>
+#include <iostream>
+#include <filesystem>
+
 const std::string NAME = "coinrun";
 
 const float GOAL_REWARD = 10.0f;
@@ -31,6 +35,8 @@ const int ENEMY_BARRIER = 19;
 
 const int CRATE = 20;
 
+const int GOAL_ASSET = 50;
+
 std::vector<std::string> WALKING_ENEMIES = {"slimeBlock", "slimePurple", "slimeBlue", "slimeGreen", "mouse", "snail", "ladybug", "wormGreen", "wormPink"};
 std::vector<std::string> PLAYER_THEME_COLORS = {"Beige", "Blue", "Green", "Pink", "Yellow"};
 std::vector<std::string> GROUND_THEMES = {"Dirt", "Grass", "Planet", "Sand", "Snow", "Stone"};
@@ -50,9 +56,10 @@ class CoinRun : public BasicAbstractGame {
 
     bool invisible_coin_collected = false;
     bool prev_level_invisible_coin_collected = false;
-    bool randomize_goal = false;  // whether to randomize coin position
+    bool randomize_goal = false; // whether to randomize coin position
     bool prev_level_randomize_goal = false;
     int prev_level_total_steps = 0;
+    std::vector<std::string> items;
 
     CoinRun()
         : BasicAbstractGame(NAME) {
@@ -63,6 +70,12 @@ class CoinRun : public BasicAbstractGame {
         main_height = 64;
 
         out_of_bounds_object = WALL_MID;
+
+        std::string path = global_resource_root + "kenney/Items/";
+        for (const auto &entry : std::filesystem::directory_iterator(path)) {
+            std::cout << entry.path().string().substr(global_resource_root.size()) << std::endl;
+            items.push_back(entry.path().string().substr(global_resource_root.size()));
+        }
     }
 
     void load_background_images() override {
@@ -103,7 +116,11 @@ class CoinRun : public BasicAbstractGame {
                 names.push_back("kenney/Enemies/" + enemy + "_move.png");
             }
         } else if (type == GOAL) {
-            names.push_back("kenney/Items/coinGold.png");
+            names.push_back("EmptyItem/empty.png");
+        } else if (type == GOAL_ASSET) {
+            for (const auto &item : items) {
+                names.push_back(item);
+            }
         } else if (type == WALL_TOP) {
             for (const auto &ground : GROUND_THEMES) {
                 names.push_back("kenney/Ground/" + ground + "/" + to_lower(ground) + "Mid.png");
@@ -272,6 +289,12 @@ class CoinRun : public BasicAbstractGame {
         choose_random_theme(ent);
     }
 
+    auto create_goal(int x, int y, int _TARGET) {
+        auto ent = add_entity(x + .5, y + .5, 0, 0, .5, _TARGET);
+        choose_random_theme(ent);
+        return ent;
+    }
+
     void generate_coin(bool randomize_goal) {
         int RAND_COIN;
         int FIXED_COIN;
@@ -344,9 +367,13 @@ class CoinRun : public BasicAbstractGame {
                 curr_y = 1;
             }
 
-            if (section_idx == random_coin_position){
-                if (coined == false){
+            if (section_idx == random_coin_position) {
+                if (coined == false) {
                     set_obj(curr_x, curr_y, RAND_COIN);
+                    if (RAND_COIN == GOAL) {
+                        auto ent = create_goal(curr_x, curr_y, GOAL_ASSET);
+                        std::cout << ent->image_theme << std::endl;
+                    }
                     coined = true;
                 }
             }
@@ -439,6 +466,10 @@ class CoinRun : public BasicAbstractGame {
         }
 
         set_obj(curr_x, curr_y, FIXED_COIN);
+        if (FIXED_COIN == GOAL) {
+            auto ent = create_goal(curr_x, curr_y, GOAL_ASSET);
+            std::cout << ent->image_theme << std::endl;
+        }
 
         fill_ground_block(curr_x, 0, 1, curr_y);
         fill_elem(curr_x + 1, 0, main_width - curr_x - 1, main_height, WALL_MID);
@@ -567,7 +598,6 @@ class CoinRun : public BasicAbstractGame {
         *(int32_t *)(info_bufs[info_name_to_offset.at("prev_level/total_steps")]) = prev_level_total_steps;
         *(int32_t *)(info_bufs[info_name_to_offset.at("total_steps")]) = cur_time;
     }
-
 };
 
 REGISTER_GAME(NAME, CoinRun);

@@ -88,7 +88,7 @@ int MazeGen::expand_to_type(std::set<int> &s0, std::set<int> &s1, int type) {
             }
 
             if (target_elems.size() > 0) {
-                return target_elems[0];
+                return target_elems[rand_gen->randint(0, target_elems.size())];
             }
         }
 
@@ -210,7 +210,6 @@ void MazeGen::generate_maze_no_dead_ends() {
     }
 }
 
-
 // Generate a maze with doors
 void MazeGen::generate_maze_with_doors(int num_doors) {
     generate_maze();
@@ -311,17 +310,16 @@ void MazeGen::generate_maze_with_doors_aisc(int num_doors, int num_keys) {
         }
     }
 
-    std::vector<int> chosen = rand_gen->choose_n(forks, num_doors+num_keys);
+    std::vector<int> chosen = rand_gen->choose_n(forks, num_doors + num_keys);
 
     int counter = 0;
     for (int i : chosen) {
-        if (counter<num_doors){
-            grid.set_index(i, DOOR_OBJ+counter+1);
+        if (counter < num_doors) {
+            grid.set_index(i, DOOR_OBJ + counter + 1);
+        } else {
+            grid.set_index(i, KEY_OBJ + counter - num_doors + 1);
         }
-        else{
-            grid.set_index(i, KEY_OBJ+counter-num_doors+1);
-        }
-        counter+=1;
+        counter += 1;
     }
 
     int agent_cell;
@@ -339,35 +337,33 @@ void MazeGen::generate_maze_with_doors_aisc(int num_doors, int num_keys) {
 
         grid.set_index(agent_cell, AGENT_OBJ);
     }
-
 }
 
 void MazeGen::deterministic_place(int start_obj, bool arrow, int rand_region) {
-    if (!arrow){
-        if (rand_region > 0){
+    if (!arrow) {
+        if (rand_region > 0) {
             int m = rand_gen->randn(num_free_cells);
 
-            for (int j = 0; j < maze_dim*100; j++) {
+            for (int j = 0; j < maze_dim * 100; j++) {
                 m = rand_gen->randn(num_free_cells);
-                if(free_cells[m] != -1 && free_cells[m] != 0){
+                if (free_cells[m] != -1 && free_cells[m] != 0) {
                     int x_val = free_cells[m] % maze_dim;
                     int y_val = free_cells[m] / maze_dim;
-                    if (x_val >= maze_dim-rand_region && y_val >= maze_dim-rand_region){
+                    if (x_val >= maze_dim - rand_region && y_val >= maze_dim - rand_region) {
                         int coin_cell = free_cells[m];
                         free_cells[m] = -1;
                         grid.set(coin_cell % maze_dim + MAZE_OFFSET,
-                            coin_cell / maze_dim + MAZE_OFFSET, start_obj);
-                        j=maze_dim*100+1;
+                                 coin_cell / maze_dim + MAZE_OFFSET, start_obj);
+                        j = maze_dim * 100 + 1;
                     }
                 }
             }
-        }
-        else {
-            grid.set(maze_dim+MAZE_OFFSET-1, maze_dim+MAZE_OFFSET-1, start_obj);
+        } else {
+            grid.set(maze_dim + MAZE_OFFSET - 1, maze_dim + MAZE_OFFSET - 1, start_obj);
         }
     }
-    if (arrow){
-        grid.set(maze_dim+MAZE_OFFSET-2, maze_dim+MAZE_OFFSET-2, start_obj);
+    if (arrow) {
+        grid.set(maze_dim + MAZE_OFFSET - 2, maze_dim + MAZE_OFFSET - 2, start_obj);
         // grid.set(maze_dim+MAZE_OFFSET-1, maze_dim+MAZE_OFFSET-2, start_obj);
     }
 }

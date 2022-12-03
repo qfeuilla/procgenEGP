@@ -17,7 +17,7 @@ const float RENDER_EPS = 0.02f;
 // objects with type higher than this threshold will be rendered with colored grid squares
 const int USE_ASSET_THRESHOLD = 100;
 const int MAX_ASSETS = USE_ASSET_THRESHOLD;
-const int MAX_IMAGE_THEMES = 20;
+const int MAX_IMAGE_THEMES = 200;
 
 BasicAbstractGame::BasicAbstractGame(std::string name)
     : Game(name) {
@@ -448,7 +448,8 @@ bool BasicAbstractGame::should_preserve_type_themes(int type) {
 }
 
 int BasicAbstractGame::mask_theme_if_necessary(int theme, int type) {
-    if (options.restrict_themes && !should_preserve_type_themes(type)) return 0;
+    if (options.restrict_themes && !should_preserve_type_themes(type))
+        return 0;
     return theme;
 }
 
@@ -1175,9 +1176,9 @@ void BasicAbstractGame::serialize(WriteBuffer *b) {
 
     fassert(!options.use_generated_assets);
     // these will be cleared and re-generated instead of being saved
-//     std::vector<std::shared_ptr<QImage>> basic_assets;
-//     std::vector<std::shared_ptr<QImage>> basic_reflections;
-//     std::vector<std::shared_ptr<QImage>> *main_bg_images_ptr;
+    //     std::vector<std::shared_ptr<QImage>> basic_assets;
+    //     std::vector<std::shared_ptr<QImage>> basic_reflections;
+    //     std::vector<std::shared_ptr<QImage>> *main_bg_images_ptr;
 
     // std::vector<float> asset_aspect_ratios;
     // std::vector<int> asset_num_themes;
@@ -1239,10 +1240,10 @@ void BasicAbstractGame::deserialize(ReadBuffer *b) {
 
     // when restoring state (to the same game type) with generated assets disabled, these data structures contain cached
     // asset data, and missing data will be filled in the same way in all environments
-//     std::vector<std::shared_ptr<QImage>> basic_assets;
-//     std::vector<std::shared_ptr<QImage>> basic_reflections;
+    //     std::vector<std::shared_ptr<QImage>> basic_assets;
+    //     std::vector<std::shared_ptr<QImage>> basic_reflections;
     // main_bg_images_ptr is set in game_init for all supported games, so it should always be the same
-//     std::vector<std::shared_ptr<QImage>> *main_bg_images_ptr;
+    //     std::vector<std::shared_ptr<QImage>> *main_bg_images_ptr;
 
     // std::vector<float> asset_aspect_ratios;
     // std::vector<int> asset_num_themes;

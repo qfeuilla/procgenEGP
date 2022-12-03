@@ -40,7 +40,8 @@ std::vector<int> RandGen::partition(int x, int n) {
     return partition;
 }
 
-int RandGen::choose_one(std::vector<int> &elems) {
+template <class T>
+T RandGen::choose_one(std::vector<T> &elems) {
     fassert(elems.size() > 0);
 
     return elems[randn((int)(elems.size()))];
@@ -112,3 +113,6 @@ void RandGen::deserialize(ReadBuffer *b) {
     istream.str(str);
     istream >> stdgen;
 }
+
+template int RandGen::choose_one<int>(std::vector<int> &);
+template std::string RandGen::choose_one<std::string>(std::vector<std::string> &);

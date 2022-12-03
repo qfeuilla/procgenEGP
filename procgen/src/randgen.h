@@ -19,12 +19,14 @@ class RandGen {
     int randint();
     bool randbool();
     std::vector<int> partition(int x, int n);
-    int choose_one(std::vector<int> &elems);
+    template <typename T>
+    T choose_one(std::vector<T> &elems);
     std::vector<int> choose_n(const std::vector<int> &elems, int n);
     std::vector<int> simple_choose(int n, int k);
     void seed(int seed);
     void serialize(WriteBuffer *b);
     void deserialize(ReadBuffer *b);
+
   private:
     bool is_seeded = false;
 };

@@ -32,6 +32,7 @@ void images_load() {
         // "misc_assets/base.png",
         // "misc_assets/ru.png",
         // "misc_assets/gl.png",
+        "EmptyItem/empty.png",
         "kenney/Ground/Planet/planetCorner_left.png",
         "kenney/Ground/Planet/planetHill_left.png",
         "kenney/Ground/Planet/planetHalf_right.png",
@@ -815,7 +816,7 @@ void images_load() {
         "platformer/playerGrey_duck.png",
     };
 
-    for (const auto& sprite_path : sprite_paths) {
+    for (const auto &sprite_path : sprite_paths) {
         sprites[sprite_path] = load_resource_ptr(sprite_path, QImage::Format_ARGB32_Premultiplied);
     }
 
