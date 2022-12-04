@@ -56,6 +56,8 @@ void Game::parse_options(std::string name, VecOptions opts) {
 
     opts.consume_string("game_asset_index", &options.game_asset_index_str);
 
+    opts.consume_bool("is_test", &options.is_test);
+
     std::stringstream iss(options.game_asset_index_str);
     int number;
     std::vector<int> game_asset_index_vec;
@@ -205,6 +207,7 @@ void Game::serialize(WriteBuffer *b) {
     b->write_int(options.random_percent); // changed
 
     b->write_string(options.game_asset_index_str);
+    b->write_bool(options.is_test);
 
     b->write_int(options.key_penalty);         // changed
     b->write_int(options.step_penalty);        // changed
@@ -280,6 +283,8 @@ void Game::deserialize(ReadBuffer *b) {
     while (iss >> number)
         game_asset_index_vec.push_back(number);
     options.game_asset_index = game_asset_index_vec;
+
+    options.is_test = b->read_bool();
 
     options.key_penalty = b->read_int();         // changed
     options.step_penalty = b->read_int();        // changed

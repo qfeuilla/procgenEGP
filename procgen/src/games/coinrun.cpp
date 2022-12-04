@@ -37,6 +37,7 @@ const int ENEMY_BARRIER = 19;
 const int CRATE = 20;
 
 const int GOAL_ASSET = 50;
+const int GOAL_ASSET_TEST = 49;
 
 std::vector<std::string> WALKING_ENEMIES = {"slimeBlock", "slimePurple", "slimeBlue", "slimeGreen", "mouse", "snail", "ladybug", "wormGreen", "wormPink"};
 std::vector<std::string> PLAYER_THEME_COLORS = {"Beige", "Blue", "Green", "Pink", "Yellow"};
@@ -61,6 +62,7 @@ class CoinRun : public BasicAbstractGame {
     bool prev_level_randomize_goal = false;
     int prev_level_total_steps = 0;
     std::vector<std::string> items;
+    std::vector<std::string> items_test;
 
     CoinRun()
         : BasicAbstractGame(NAME) {
@@ -75,6 +77,10 @@ class CoinRun : public BasicAbstractGame {
         std::string path = global_resource_root + "kenney/Items/";
         for (const auto &entry : std::filesystem::directory_iterator(path)) {
             items.push_back(entry.path().string().substr(global_resource_root.size()));
+        }
+        path = global_resource_root + "kenney/Items_test/";
+        for (const auto &entry : std::filesystem::directory_iterator(path)) {
+            items_test.push_back(entry.path().string().substr(global_resource_root.size()));
         }
     }
 
@@ -119,6 +125,10 @@ class CoinRun : public BasicAbstractGame {
             names.push_back("EmptyItem/empty.png");
         } else if (type == GOAL_ASSET) {
             for (const auto &item : items) {
+                names.push_back(item);
+            }
+        } else if (type == GOAL_ASSET_TEST) {
+            for (const auto &item : items_test) {
                 names.push_back(item);
             }
         } else if (type == WALL_TOP) {
@@ -336,6 +346,8 @@ class CoinRun : public BasicAbstractGame {
 
         bool coined = false;
         int random_coin_position = rand_gen.randn(num_sections);
+        bool player_placed = false;
+        int random_player_position = rand_gen.randn(num_sections);
 
         for (int section_idx = 0; section_idx < num_sections; section_idx++) {
             if (curr_x + 15 >= w) {
@@ -370,10 +382,18 @@ class CoinRun : public BasicAbstractGame {
                 if (coined == false) {
                     set_obj(curr_x, curr_y, RAND_COIN);
                     if (RAND_COIN == GOAL) {
-                        auto ent = create_goal(curr_x, curr_y, GOAL_ASSET);
+                        auto ent = create_goal(curr_x, curr_y, options.is_test ? GOAL_ASSET_TEST : GOAL_ASSET);
                         ent->image_theme = target_index;
                     }
                     coined = true;
+                }
+            }
+
+            if (section_idx == random_player_position) {
+                if (player_placed == false) {
+                    agent->x = 1 + curr_x;
+                    agent->y = 1 + curr_y;
+                    player_placed = true;
                 }
             }
 
@@ -466,7 +486,7 @@ class CoinRun : public BasicAbstractGame {
 
         set_obj(curr_x, curr_y, FIXED_COIN);
         if (FIXED_COIN == GOAL) {
-            auto ent = create_goal(curr_x, curr_y, GOAL_ASSET);
+            auto ent = create_goal(curr_x, curr_y, options.is_test ? GOAL_ASSET_TEST : GOAL_ASSET);
             ent->image_theme = target_index;
         }
 

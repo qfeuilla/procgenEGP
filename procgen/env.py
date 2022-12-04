@@ -240,6 +240,7 @@ class ProcgenGym3Env(BaseProcgenEnv):
         distribution_mode="hard",
         random_percent=0,
         game_asset_index=[],
+        is_test=False,
         key_penalty=0,
         step_penalty=0,
         rand_region=0,
@@ -277,11 +278,13 @@ class ProcgenGym3Env(BaseProcgenEnv):
                 "distribution_mode": distribution_mode,
                 "random_percent": int(random_percent),
                 "game_asset_index": " ".join(list(map(str, game_asset_index))),
+                "is_test": bool(is_test),
                 "key_penalty": int(key_penalty),
                 "step_penalty": int(step_penalty),
                 "rand_region": int(rand_region),
                 "continue_after_coin": bool(continue_after_coin),
             }
+        
         super().__init__(num, env_name, options, **kwargs)
     
     def observe(self):

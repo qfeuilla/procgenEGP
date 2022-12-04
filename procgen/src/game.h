@@ -65,6 +65,7 @@ struct GameOptions {
     int plain_assets = 0;
     int physics_mode = 0;
 
+    bool is_test = false;
     std::string game_asset_index_str;
     std::vector<int> game_asset_index;
 };
