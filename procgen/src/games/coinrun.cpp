@@ -74,7 +74,6 @@ class CoinRun : public BasicAbstractGame {
 
         std::string path = global_resource_root + "kenney/Items/";
         for (const auto &entry : std::filesystem::directory_iterator(path)) {
-            std::cout << entry.path().string().substr(global_resource_root.size()) << std::endl;
             items.push_back(entry.path().string().substr(global_resource_root.size()));
         }
     }
@@ -296,7 +295,7 @@ class CoinRun : public BasicAbstractGame {
         return ent;
     }
 
-    int generate_coin(bool randomize_goal) {
+    void generate_coin(bool randomize_goal, int target_index) {
         int RAND_COIN;
         int FIXED_COIN;
 
@@ -307,9 +306,6 @@ class CoinRun : public BasicAbstractGame {
             RAND_COIN = INVISIBLE_GOAL;
             FIXED_COIN = GOAL;
         }
-
-        int current_goal_asset = 0;
-
         int max_difficulty = 3;
         int dif = rand_gen.randn(max_difficulty) + 1;
 
@@ -375,7 +371,7 @@ class CoinRun : public BasicAbstractGame {
                     set_obj(curr_x, curr_y, RAND_COIN);
                     if (RAND_COIN == GOAL) {
                         auto ent = create_goal(curr_x, curr_y, GOAL_ASSET);
-                        current_goal_asset = ent->image_theme;
+                        ent->image_theme = target_index;
                     }
                     coined = true;
                 }
@@ -471,13 +467,11 @@ class CoinRun : public BasicAbstractGame {
         set_obj(curr_x, curr_y, FIXED_COIN);
         if (FIXED_COIN == GOAL) {
             auto ent = create_goal(curr_x, curr_y, GOAL_ASSET);
-            ent->image_theme = ent->image_theme;
+            ent->image_theme = target_index;
         }
 
         fill_ground_block(curr_x, 0, 1, curr_y);
         fill_elem(curr_x + 1, 0, main_width - curr_x - 1, main_height, WALL_MID);
-
-        return current_goal_asset;
     }
 
     void game_reset() override {
@@ -516,10 +510,7 @@ class CoinRun : public BasicAbstractGame {
         int rand_check = rand_gen.randn(100);
         randomize_goal = (rand_check < options.random_percent);
 
-        std::ofstream myfile;
-        myfile.open(global_resource_root + "target_asset.txt");
-        myfile << generate_coin(randomize_goal);
-        myfile.close();
+        generate_coin(randomize_goal, options.game_asset_index);
     }
 
     bool can_support(int obj) {

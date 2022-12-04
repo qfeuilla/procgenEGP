@@ -22,7 +22,8 @@ void bgr32_to_rgb888(void *dst_rgb888, void *src_bgr32, int w, int h) {
     }
 }
 
-Game::Game(std::string name) : game_name(name) {
+Game::Game(std::string name)
+    : game_name(name) {
     timeout = 1000;
     episodes_remaining = 0;
     last_reward = -1;
@@ -50,10 +51,11 @@ void Game::parse_options(std::string name, VecOptions opts) {
     opts.consume_bool("use_sequential_levels", &options.use_sequential_levels);
 
     opts.consume_int("random_percent", &options.random_percent); // changed
-    opts.consume_int("key_penalty", &options.key_penalty); // changed
-    opts.consume_int("step_penalty", &options.step_penalty); // changed
-    opts.consume_int("rand_region", &options.rand_region); //changed new
-    opts.consume_bool("continue_after_coin", &options.continue_after_coin); //changed new
+    opts.consume_int("game_asset_index", &options.game_asset_index);
+    opts.consume_int("key_penalty", &options.key_penalty);                  // changed
+    opts.consume_int("step_penalty", &options.step_penalty);                // changed
+    opts.consume_int("rand_region", &options.rand_region);                  // changed new
+    opts.consume_bool("continue_after_coin", &options.continue_after_coin); // changed new
 
     int dist_mode = EasyMode;
     opts.consume_int("distribution_mode", &dist_mode);
@@ -176,7 +178,7 @@ void Game::game_init() {
 
 void Game::serialize(WriteBuffer *b) {
     b->write_int(SERIALIZE_VERSION);
-    
+
     b->write_string(game_name);
 
     b->write_int(options.paint_vel_info);
@@ -190,9 +192,10 @@ void Game::serialize(WriteBuffer *b) {
     b->write_int(options.use_sequential_levels);
 
     b->write_int(options.random_percent); // changed
-    b->write_int(options.key_penalty); // changed
-    b->write_int(options.step_penalty); // changed
-    b->write_int(options.rand_region); // changed new
+    b->write_int(options.game_asset_index);
+    b->write_int(options.key_penalty);         // changed
+    b->write_int(options.step_penalty);        // changed
+    b->write_int(options.rand_region);         // changed new
     b->write_int(options.continue_after_coin); // changed new
 
     b->write_int(options.use_easy_jump);
@@ -255,10 +258,11 @@ void Game::deserialize(ReadBuffer *b) {
     options.distribution_mode = DistributionMode(b->read_int());
     options.use_sequential_levels = b->read_int();
 
-    options.random_percent = b->read_int();  // changed
-    options.key_penalty = b->read_int();  // changed
-    options.step_penalty = b->read_int();  // changed
-    options.rand_region = b->read_int(); // changed new
+    options.random_percent = b->read_int(); // changed
+    options.game_asset_index = b->read_int();
+    options.key_penalty = b->read_int();         // changed
+    options.step_penalty = b->read_int();        // changed
+    options.rand_region = b->read_int();         // changed new
     options.continue_after_coin = b->read_int(); // changed new
 
     options.use_easy_jump = b->read_int();

@@ -64,6 +64,8 @@ struct GameOptions {
     bool use_easy_jump = false;
     int plain_assets = 0;
     int physics_mode = 0;
+
+    int game_asset_index = 0;
 };
 
 class Game {
