@@ -129,7 +129,7 @@ static void stepping_worker(std::mutex &stepping_thread_mutex,
             game->reset();
             game->observe();
             game->initial_reset_complete = true;
-        } else{
+        } else {
             game->step();
         }
 
@@ -268,7 +268,7 @@ VecGame::VecGame(int _nenvs, VecOptions opts) {
         s.high.int32 = INT32_MAX;
         info_types.push_back(s);
     }
-    
+
     if (render_human) {
         struct libenv_tensortype s;
         strcpy(s.name, "rgb");
@@ -283,77 +283,76 @@ VecGame::VecGame(int _nenvs, VecOptions opts) {
         info_types.push_back(s);
     }
 
-// Added to track coinrun metrics.
+    // Added to track coinrun metrics.
 
-// Using libenv discrete scalar (!?) bc that was
-// what the readme example used, even tho
-// bool would be more appropriate
-	{
-	    struct libenv_tensortype s;
-	    strcpy(s.name, "invisible_coin_collected");
-	    s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
-	    s.dtype = LIBENV_DTYPE_INT32;
-	    s.ndim = 0,
-	    s.low.int32 = 0;
-	    s.high.int32 = INT32_MAX;
-	    info_types.push_back(s);
-	}
+    // Using libenv discrete scalar (!?) bc that was
+    // what the readme example used, even tho
+    // bool would be more appropriate
+    {
+        struct libenv_tensortype s;
+        strcpy(s.name, "invisible_coin_collected");
+        s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
+        s.dtype = LIBENV_DTYPE_INT32;
+        s.ndim = 0,
+        s.low.int32 = 0;
+        s.high.int32 = INT32_MAX;
+        info_types.push_back(s);
+    }
 
-	{
-	    struct libenv_tensortype s;
-	    strcpy(s.name, "prev_level/invisible_coin_collected");
-	    s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
-	    s.dtype = LIBENV_DTYPE_INT32;
-	    s.ndim = 0,
-	    s.low.int32 = 0;
-	    s.high.int32 = INT32_MAX;
-	    info_types.push_back(s);
-	}
+    {
+        struct libenv_tensortype s;
+        strcpy(s.name, "prev_level/invisible_coin_collected");
+        s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
+        s.dtype = LIBENV_DTYPE_INT32;
+        s.ndim = 0,
+        s.low.int32 = 0;
+        s.high.int32 = INT32_MAX;
+        info_types.push_back(s);
+    }
 
-	{
-	    struct libenv_tensortype s;
-	    strcpy(s.name, "randomize_goal");
-	    s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
-	    s.dtype = LIBENV_DTYPE_INT32;
-	    s.ndim = 0,
-	    s.low.int32 = 0;
-	    s.high.int32 = INT32_MAX;
-	    info_types.push_back(s);
-	}
+    {
+        struct libenv_tensortype s;
+        strcpy(s.name, "randomize_goal");
+        s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
+        s.dtype = LIBENV_DTYPE_INT32;
+        s.ndim = 0,
+        s.low.int32 = 0;
+        s.high.int32 = INT32_MAX;
+        info_types.push_back(s);
+    }
 
-	{
-	    struct libenv_tensortype s;
-	    strcpy(s.name, "prev_level/randomize_goal");
-	    s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
-	    s.dtype = LIBENV_DTYPE_INT32;
-	    s.ndim = 0,
-	    s.low.int32 = 0;
-	    s.high.int32 = INT32_MAX;
-	    info_types.push_back(s);
-	}
+    {
+        struct libenv_tensortype s;
+        strcpy(s.name, "prev_level/randomize_goal");
+        s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
+        s.dtype = LIBENV_DTYPE_INT32;
+        s.ndim = 0,
+        s.low.int32 = 0;
+        s.high.int32 = INT32_MAX;
+        info_types.push_back(s);
+    }
 
-	{
-	    struct libenv_tensortype s;
-	    strcpy(s.name, "prev_level/total_steps");
-	    s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
-	    s.dtype = LIBENV_DTYPE_INT32;
-	    s.ndim = 0,
-	    s.low.int32 = 0;
-	    s.high.int32 = INT32_MAX;
-	    info_types.push_back(s);
-	}
+    {
+        struct libenv_tensortype s;
+        strcpy(s.name, "prev_level/total_steps");
+        s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
+        s.dtype = LIBENV_DTYPE_INT32;
+        s.ndim = 0,
+        s.low.int32 = 0;
+        s.high.int32 = INT32_MAX;
+        info_types.push_back(s);
+    }
 
-	{
-	    struct libenv_tensortype s;
-	    strcpy(s.name, "total_steps");
-	    s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
-	    s.dtype = LIBENV_DTYPE_INT32;
-	    s.ndim = 0,
-	    s.low.int32 = 0;
-	    s.high.int32 = INT32_MAX;
-	    info_types.push_back(s);
-	}
-
+    {
+        struct libenv_tensortype s;
+        strcpy(s.name, "total_steps");
+        s.scalar_type = LIBENV_SCALAR_TYPE_DISCRETE;
+        s.dtype = LIBENV_DTYPE_INT32;
+        s.ndim = 0,
+        s.low.int32 = 0;
+        s.high.int32 = INT32_MAX;
+        info_types.push_back(s);
+    }
 
     int level_seed_low = 0;
     int level_seed_high = 0;
@@ -416,7 +415,7 @@ void VecGame::set_buffers(const std::vector<std::vector<void *>> &ac, const std:
             game->info_bufs = info[e];
             game->reward_ptr = &rew[e];
             game->first_ptr = &first[e];
-            
+
             // render the initial state so we don't see a black screen on the first frame
             fassert(!game->is_waiting_for_step);
             fassert(!game->initial_reset_complete);
@@ -509,23 +508,24 @@ void VecGame::wait_for_stepping_threads() {
 }
 
 extern "C" {
-    LIBENV_API int get_state(libenv_env *handle, int env_idx, char *data, int length) {
-        auto venv = (VecGame *)(handle);
-        venv->wait_for_stepping_threads();
-        auto b = WriteBuffer(data, length);
-        venv->games.at(env_idx)->serialize(&b);
-        b.write_int(END_OF_BUFFER);
-        return b.offset;
-    }
+LIBENV_API int get_state(libenv_env *handle, int env_idx, char *data, int length) {
+    auto venv = (VecGame *)(handle);
+    venv->wait_for_stepping_threads();
+    auto b = WriteBuffer(data, length);
+    venv->games.at(env_idx)->serialize(&b);
+    b.write_int(END_OF_BUFFER);
+    return b.offset;
+}
 
-    LIBENV_API void set_state(libenv_env *handle, int env_idx, char *data, int length) {
-        auto venv = (VecGame *)(handle);
-        venv->wait_for_stepping_threads();
-        auto b = ReadBuffer(data, length);
-        venv->games.at(env_idx)->deserialize(&b);
-        fassert(b.read_int() == END_OF_BUFFER);
-        // after deserializing, we need to update the observation and info buffers so that the
-        // next time VecGame::observe() is called, the correct data will be in the buffers
-        venv->games.at(env_idx)->observe();
-    }
+LIBENV_API void set_state(libenv_env *handle, int env_idx, char *data, int length) {
+    auto venv = (VecGame *)(handle);
+    venv->wait_for_stepping_threads();
+    auto b = ReadBuffer(data, length);
+    venv->games.at(env_idx)->deserialize(&b);
+    venv->games.at(env_idx)->set_game_idx(env_idx);
+    fassert(b.read_int() == END_OF_BUFFER);
+    // after deserializing, we need to update the observation and info buffers so that the
+    // next time VecGame::observe() is called, the correct data will be in the buffers
+    venv->games.at(env_idx)->observe();
+}
 }

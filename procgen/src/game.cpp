@@ -2,6 +2,8 @@
 #include "game.h"
 #include "vecoptions.h"
 
+#include <sstream>
+
 // this should be updated whenever the state format or environments may have changed
 const int SERIALIZE_VERSION = 0;
 
@@ -51,7 +53,16 @@ void Game::parse_options(std::string name, VecOptions opts) {
     opts.consume_bool("use_sequential_levels", &options.use_sequential_levels);
 
     opts.consume_int("random_percent", &options.random_percent); // changed
-    opts.consume_int("game_asset_index", &options.game_asset_index);
+
+    opts.consume_string("game_asset_index", &options.game_asset_index_str);
+
+    std::stringstream iss(options.game_asset_index_str);
+    int number;
+    std::vector<int> game_asset_index_vec;
+    while (iss >> number)
+        game_asset_index_vec.push_back(number);
+    options.game_asset_index = game_asset_index_vec;
+
     opts.consume_int("key_penalty", &options.key_penalty);                  // changed
     opts.consume_int("step_penalty", &options.step_penalty);                // changed
     opts.consume_int("rand_region", &options.rand_region);                  // changed new
@@ -192,7 +203,9 @@ void Game::serialize(WriteBuffer *b) {
     b->write_int(options.use_sequential_levels);
 
     b->write_int(options.random_percent); // changed
-    b->write_int(options.game_asset_index);
+
+    b->write_string(options.game_asset_index_str);
+
     b->write_int(options.key_penalty);         // changed
     b->write_int(options.step_penalty);        // changed
     b->write_int(options.rand_region);         // changed new
@@ -259,7 +272,15 @@ void Game::deserialize(ReadBuffer *b) {
     options.use_sequential_levels = b->read_int();
 
     options.random_percent = b->read_int(); // changed
-    options.game_asset_index = b->read_int();
+
+    options.game_asset_index_str = b->read_string();
+    std::stringstream iss(options.game_asset_index_str);
+    int number;
+    std::vector<int> game_asset_index_vec;
+    while (iss >> number)
+        game_asset_index_vec.push_back(number);
+    options.game_asset_index = game_asset_index_vec;
+
     options.key_penalty = b->read_int();         // changed
     options.step_penalty = b->read_int();        // changed
     options.rand_region = b->read_int();         // changed new

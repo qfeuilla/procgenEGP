@@ -510,7 +510,7 @@ class CoinRun : public BasicAbstractGame {
         int rand_check = rand_gen.randn(100);
         randomize_goal = (rand_check < options.random_percent);
 
-        generate_coin(randomize_goal, options.game_asset_index);
+        generate_coin(randomize_goal, options.game_asset_index[this->game_idx]);
     }
 
     bool can_support(int obj) {

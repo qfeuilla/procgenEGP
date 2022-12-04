@@ -65,7 +65,8 @@ struct GameOptions {
     int plain_assets = 0;
     int physics_mode = 0;
 
-    int game_asset_index = 0;
+    std::string game_asset_index_str;
+    std::vector<int> game_asset_index;
 };
 
 class Game {
@@ -107,8 +108,11 @@ class Game {
 
     bool is_waiting_for_step = false;
 
+    int game_idx = 0;
+
     // pointers to buffers
-    int32_t *action_ptr;
+    int32_t *
+        action_ptr;
     std::vector<void *> obs_bufs;
     std::vector<void *> info_bufs;
     float *reward_ptr = nullptr;
@@ -119,6 +123,9 @@ class Game {
     void reset();
     void render_to_buf(void *buf, int w, int h, bool antialias);
     void parse_options(std::string name, VecOptions opt_vec);
+    void set_game_idx(int idx) {
+        this->game_idx = idx;
+    }
 
     virtual ~Game() = 0;
     virtual void observe();
