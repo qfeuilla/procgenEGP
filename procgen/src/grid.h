@@ -9,6 +9,8 @@ Simple utility class for managing a grid of objects
 #include <vector>
 #include "cpp-utils.h"
 #include "buffer.h"
+#include <iostream>
+#include <iomanip>
 
 template <typename T>
 class Grid {
@@ -27,6 +29,15 @@ class Grid {
         h = height;
         data.clear();
         data.resize(width * height);
+    }
+
+    void print_grid() {
+        for (int j = h - 1; j >= 0; j--) {
+            for (int i = 0; i < w; i++) {
+                std::cout << std::setw(4) << get(i, j) << " ";
+            }
+            std::cout << std::endl;
+        }
     }
 
     bool contains(int x, int y) const {

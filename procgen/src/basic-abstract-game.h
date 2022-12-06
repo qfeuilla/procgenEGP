@@ -111,6 +111,10 @@ class BasicAbstractGame : public Game {
     bool agent_has_collision();
     void reposition_agent();
 
+    void print_grid() {
+        grid.print_grid();
+    }
+
   protected:
     std::shared_ptr<Entity> agent;
     std::vector<std::shared_ptr<Entity>> entities;
@@ -120,7 +124,7 @@ class BasicAbstractGame : public Game {
 
     std::vector<float> asset_aspect_ratios;
     std::vector<int> asset_num_themes;
-    
+
     bool use_procgen_background = false;
     int background_index = 0;
     float bg_tile_ratio = 0.0f;

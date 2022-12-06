@@ -238,7 +238,7 @@ class ProcgenGym3Env(BaseProcgenEnv):
         use_generated_assets=False,
         paint_vel_info=False,
         distribution_mode="hard",
-        random_percent=0,
+        random_percent=100,
         game_asset_index=[],
         is_test=False,
         key_penalty=0,

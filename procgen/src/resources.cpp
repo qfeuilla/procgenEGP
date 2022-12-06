@@ -335,6 +335,7 @@ void images_load() {
         "kenney/Backgrounds/blue_shroom.png",
         "kenney/Backgrounds/blue_land.png",
         "kenney/Items_test/bomb.png",
+        "kenney/Items_test/saw.png",
         "kenney/Items_test/cactus.png",
         "kenney/Items_test/torch1.png",
         "kenney/Items/flagRed2.png",
