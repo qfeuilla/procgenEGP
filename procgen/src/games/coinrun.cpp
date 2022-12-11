@@ -8,7 +8,7 @@
 
 #include <string>
 #include <iostream>
-#include <filesystem>
+#include <experimental/filesystem>
 #include <fstream>
 
 const std::string NAME = "coinrun";
@@ -84,11 +84,11 @@ class CoinRun : public BasicAbstractGame {
         out_of_bounds_object = WALL_MID;
 
         std::string path = global_resource_root + "kenney/Items/";
-        for (const auto &entry : std::filesystem::directory_iterator(path)) {
+        for (const auto &entry : std::experimental::filesystem::directory_iterator(path)) {
             items.push_back(entry.path().string().substr(global_resource_root.size()));
         }
         path = global_resource_root + "kenney/Items_test/";
-        for (const auto &entry : std::filesystem::directory_iterator(path)) {
+        for (const auto &entry : std::experimental::filesystem::directory_iterator(path)) {
             items_test.push_back(entry.path().string().substr(global_resource_root.size()));
         }
     }
