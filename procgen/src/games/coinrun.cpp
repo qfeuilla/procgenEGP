@@ -86,37 +86,37 @@ class CoinRun : public BasicAbstractGame {
         /*
         std::string path = global_resource_root + "kenney/Items/";
         */
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagGreen_down.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/keyYellow.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagGreen2.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagRed2.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagBlue_down.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagYellow_down.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/gemBlue.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagYellow1.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/coinGold.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagYellow2.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/red_line_diag.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/yellow_line_diag.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/coinSilver.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/keyRed.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagRed_down.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagRed1.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagBlue2.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/keyGreen.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/gemRed.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/coinBronze.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/keyBlue.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/gemGreen.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/star.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/gemYellow.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagGreen1.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagBlue1.png");
+        items.push_back("kenney/Items/flagGreen_down.png");
+        items.push_back("kenney/Items/keyYellow.png");
+        items.push_back("kenney/Items/flagGreen2.png");
+        items.push_back("kenney/Items/flagRed2.png");
+        items.push_back("kenney/Items/flagBlue_down.png");
+        items.push_back("kenney/Items/flagYellow_down.png");
+        items.push_back("kenney/Items/gemBlue.png");
+        items.push_back("kenney/Items/flagYellow1.png");
+        items.push_back("kenney/Items/coinGold.png");
+        items.push_back("kenney/Items/flagYellow2.png");
+        items.push_back("kenney/Items/red_line_diag.png");
+        items.push_back("kenney/Items/yellow_line_diag.png");
+        items.push_back("kenney/Items/coinSilver.png");
+        items.push_back("kenney/Items/keyRed.png");
+        items.push_back("kenney/Items/flagRed_down.png");
+        items.push_back("kenney/Items/flagRed1.png");
+        items.push_back("kenney/Items/flagBlue2.png");
+        items.push_back("kenney/Items/keyGreen.png");
+        items.push_back("kenney/Items/gemRed.png");
+        items.push_back("kenney/Items/coinBronze.png");
+        items.push_back("kenney/Items/keyBlue.png");
+        items.push_back("kenney/Items/gemGreen.png");
+        items.push_back("kenney/Items/star.png");
+        items.push_back("kenney/Items/gemYellow.png");
+        items.push_back("kenney/Items/flagGreen1.png");
+        items.push_back("kenney/Items/flagBlue1.png");
 
-        items_test.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/bomb.png");
-        items_test.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/saw.png");
-        items_test.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/torch1.png");
-        items_test.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/cactus.png");
+        items_test.push_back("kenney/Items_test/bomb.png");
+        items_test.push_back("kenney/Items_test/saw.png");
+        items_test.push_back("kenney/Items_test/torch1.png");
+        items_test.push_back("kenney/Items_test/cactus.png");
 
 
         /*
