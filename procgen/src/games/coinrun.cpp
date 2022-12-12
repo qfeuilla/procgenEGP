@@ -113,10 +113,10 @@ class CoinRun : public BasicAbstractGame {
         items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagGreen1.png");
         items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items/flagBlue1.png");
 
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/bomb.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/saw.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/torch1.png");
-        items.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/cactus.png");
+        items_test.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/bomb.png");
+        items_test.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/saw.png");
+        items_test.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/torch1.png");
+        items_test.push_back("/home/research/Desktop/procgenEGP/procgen/data/assets/kenney/Items_test/cactus.png");
 
 
         /*
