@@ -414,7 +414,7 @@ class CoinRun : public BasicAbstractGame {
         }
 
         for (int section_idx = 0; section_idx < num_sections; section_idx++) {
-            if (curr_x + 10 >= w) {
+            if (curr_x + 15 >= w) {
                 break;
             }
 
@@ -551,7 +551,7 @@ class CoinRun : public BasicAbstractGame {
             ent->image_theme = target_index;
         }
 
-        if (!player_placed) {
+        if (!player_placed && randomize_goal) {
             agent->x = curr_x;
             agent->y = 1 + curr_y;
             last_agent_y = agent->y;
@@ -592,6 +592,11 @@ class CoinRun : public BasicAbstractGame {
         int rand_check = rand_gen.randn(100);
         randomize_goal = (rand_check < options.random_percent);
 
+        if (!randomize_goal) {
+            agent->x = 1 + agent->rx;
+            agent->y = 1 + agent->ry;
+            last_agent_y = agent->y;
+        }
         is_on_crate = false;
         init_floor_and_walls();
 
