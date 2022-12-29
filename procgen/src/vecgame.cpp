@@ -2,6 +2,7 @@
 #include "cpp-utils.h"
 #include "vecoptions.h"
 #include "game.h"
+#include <iostream>
 
 const int32_t END_OF_BUFFER = 0xCAFECAFE;
 
@@ -522,10 +523,16 @@ LIBENV_API void set_state(libenv_env *handle, int env_idx, char *data, int lengt
     venv->wait_for_stepping_threads();
     auto b = ReadBuffer(data, length);
     venv->games.at(env_idx)->deserialize(&b);
-    venv->games.at(env_idx)->set_game_idx(env_idx);
+    venv->games.at(env_idx)->game_idx = env_idx;
     fassert(b.read_int() == END_OF_BUFFER);
     // after deserializing, we need to update the observation and info buffers so that the
     // next time VecGame::observe() is called, the correct data will be in the buffers
     venv->games.at(env_idx)->observe();
+}
+
+LIBENV_API void set_game_idx(libenv_env *handle, int env_idx) {
+    auto venv = (VecGame *)(handle);
+    venv->wait_for_stepping_threads();
+    venv->games.at(env_idx)->set_game_idx(env_idx);
 }
 }

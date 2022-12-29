@@ -155,6 +155,7 @@ class BaseProcgenEnv(CEnv):
             c_func_defs=[
                 "int get_state(libenv_env *, int, char *, int);",
                 "void set_state(libenv_env *, int, char *, int);",
+                "void set_game_idx(libenv_env *, int);",
             ],
         )
         # don't use the dict space for actions
@@ -174,6 +175,10 @@ class BaseProcgenEnv(CEnv):
         for env_idx in range(self.num):
             state = states[env_idx]
             self.call_c_func("set_state", env_idx, state, len(state))
+
+    def set_game_idx(self):
+        for env_idx in range(self.num):
+            self.call_c_func("set_game_idx", env_idx)
 
     def get_combos(self):
         return [

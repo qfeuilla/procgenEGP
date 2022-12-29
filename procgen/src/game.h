@@ -125,6 +125,7 @@ class Game {
     void render_to_buf(void *buf, int w, int h, bool antialias);
     void parse_options(std::string name, VecOptions opt_vec);
     void set_game_idx(int idx) {
+        std::cout << idx << std::endl;
         this->game_idx = idx;
     }
 

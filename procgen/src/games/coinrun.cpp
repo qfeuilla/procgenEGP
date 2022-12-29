@@ -118,7 +118,6 @@ class CoinRun : public BasicAbstractGame {
         items_test.push_back("kenney/Items_test/torch1.png");
         items_test.push_back("kenney/Items_test/cactus.png");
 
-
         /*
         for (const auto &entry : std::experimental::filesystem::directory_iterator(path)) {
             items.push_back(entry.path().string().substr(global_resource_root.size()));
@@ -602,6 +601,9 @@ class CoinRun : public BasicAbstractGame {
 
         if (options.is_test)
             std::cout << "level seed :" << current_level_seed << std::endl;
+
+        // std::cout << "game idx :" << this->game_idx << std::endl;
+        // std::cout << "asset :" << options.game_asset_index[this->game_idx] << std::endl;
 
         generate_coin(randomize_goal, options.game_asset_index[this->game_idx]);
 
