@@ -10,6 +10,7 @@
 #include <iostream>
 #include <experimental/filesystem>
 #include <fstream>
+#include <list>
 
 const std::string NAME = "coinrun";
 
@@ -70,8 +71,8 @@ class CoinRun : public BasicAbstractGame {
     bool randomize_goal = false; // whether to randomize coin position
     bool prev_level_randomize_goal = false;
     int prev_level_total_steps = 0;
-    std::vector<std::string> items;
-    std::vector<std::string> items_test;
+    std::list<std::string> items;
+    std::list<std::string> items_test;
 
     CoinRun()
         : BasicAbstractGame(NAME) {
@@ -86,32 +87,32 @@ class CoinRun : public BasicAbstractGame {
         /*
         std::string path = global_resource_root + "kenney/Items/";
         */
-        items.push_back("kenney/Items/flagGreen_down.png");
-        items.push_back("kenney/Items/keyYellow.png");
-        items.push_back("kenney/Items/flagGreen2.png");
-        items.push_back("kenney/Items/flagRed2.png");
+        items.push_back("kenney/Items/coinBronze.png");
+        items.push_back("kenney/Items/coinGold.png");
+        items.push_back("kenney/Items/coinSilver.png");
+        items.push_back("kenney/Items/flagBlue1.png");
+        items.push_back("kenney/Items/flagBlue2.png");
         items.push_back("kenney/Items/flagBlue_down.png");
+        items.push_back("kenney/Items/flagGreen1.png");
+        items.push_back("kenney/Items/flagGreen2.png");
+        items.push_back("kenney/Items/flagGreen_down.png");
+        items.push_back("kenney/Items/flagRed1.png");
+        items.push_back("kenney/Items/flagRed2.png");
+        items.push_back("kenney/Items/flagRed_down.png");
+        items.push_back("kenney/Items/flagYellow1.png");
+        items.push_back("kenney/Items/flagYellow2.png");
         items.push_back("kenney/Items/flagYellow_down.png");
         items.push_back("kenney/Items/gemBlue.png");
-        items.push_back("kenney/Items/flagYellow1.png");
-        items.push_back("kenney/Items/coinGold.png");
-        items.push_back("kenney/Items/flagYellow2.png");
-        items.push_back("kenney/Items/red_line_diag.png");
-        items.push_back("kenney/Items/yellow_line_diag.png");
-        items.push_back("kenney/Items/coinSilver.png");
-        items.push_back("kenney/Items/keyRed.png");
-        items.push_back("kenney/Items/flagRed_down.png");
-        items.push_back("kenney/Items/flagRed1.png");
-        items.push_back("kenney/Items/flagBlue2.png");
-        items.push_back("kenney/Items/keyGreen.png");
-        items.push_back("kenney/Items/gemRed.png");
-        items.push_back("kenney/Items/coinBronze.png");
-        items.push_back("kenney/Items/keyBlue.png");
         items.push_back("kenney/Items/gemGreen.png");
-        items.push_back("kenney/Items/star.png");
+        items.push_back("kenney/Items/gemRed.png");
         items.push_back("kenney/Items/gemYellow.png");
-        items.push_back("kenney/Items/flagGreen1.png");
-        items.push_back("kenney/Items/flagBlue1.png");
+        items.push_back("kenney/Items/keyBlue.png");
+        items.push_back("kenney/Items/keyGreen.png");
+        items.push_back("kenney/Items/keyRed.png");
+        items.push_back("kenney/Items/keyYellow.png");
+        items.push_back("kenney/Items/red_line_diag.png");
+        items.push_back("kenney/Items/star.png");
+        items.push_back("kenney/Items/yellow_line_diag.png");
 
         items_test.push_back("kenney/Items_test/bomb.png");
         items_test.push_back("kenney/Items_test/saw.png");
@@ -169,11 +170,15 @@ class CoinRun : public BasicAbstractGame {
         } else if (type == GOAL) {
             names.push_back("EmptyItem/empty.png");
         } else if (type == GOAL_ASSET) {
-            for (const auto &item : items) {
+            std::string log = "";
+            for (const auto &item : this->items) {
+                log.append(item);
+                log.append("\n");
                 names.push_back(item);
             }
+            // std::cout << log;
         } else if (type == GOAL_ASSET_TEST) {
-            for (const auto &item : items_test) {
+            for (const auto &item : this->items_test) {
                 names.push_back(item);
             }
         } else if (type == WALL_TOP) {
@@ -447,7 +452,7 @@ class CoinRun : public BasicAbstractGame {
                 fill_ground_block(curr_x, 0, dx, curr_y);
                 set_obj(curr_x + int(dx / 2), curr_y, GOAL);
                 auto ent = create_goal(curr_x + int(dx / 2), curr_y, options.is_test ? GOAL_ASSET_TEST : GOAL_ASSET);
-                ent->image_theme = target_index;
+                choose_specific_theme(ent, target_index);
                 coined = true;
             } else if (curr_x + dx >= player_pos_x && !player_placed) {
                 fill_ground_block(curr_x, 0, dx, curr_y);
@@ -547,7 +552,7 @@ class CoinRun : public BasicAbstractGame {
         if (!coined) {
             set_obj(curr_x, curr_y, GOAL);
             auto ent = create_goal(curr_x, curr_y, options.is_test ? GOAL_ASSET_TEST : GOAL_ASSET);
-            ent->image_theme = target_index;
+            choose_specific_theme(ent, target_index);
         }
 
         if (!player_placed && randomize_goal) {

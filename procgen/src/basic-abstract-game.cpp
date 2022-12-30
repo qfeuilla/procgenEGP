@@ -1041,6 +1041,11 @@ void BasicAbstractGame::choose_random_theme(const std::shared_ptr<Entity> &ent) 
     ent->image_theme = rand_gen.randn(asset_num_themes[ent->image_type]);
 }
 
+void BasicAbstractGame::choose_specific_theme(const std::shared_ptr<Entity> &ent, int theme) {
+    initialize_asset_if_necessary(ent->image_type);
+    ent->image_theme = theme;
+}
+
 void BasicAbstractGame::choose_step_random_theme(const std::shared_ptr<Entity> &ent) {
     initialize_asset_if_necessary(ent->image_type);
     ent->image_theme = step_rand_int % asset_num_themes[ent->image_type];
